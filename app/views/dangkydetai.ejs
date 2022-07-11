@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("./layout/layout.css.ejs") %>
+    <style>
+      #kc1,
+      #kc2,
+      #kc3,
+      #kc5 {
+        padding-left: 50px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <%- include("./layout/layout.header.sinhvien.ejs") %>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <div>
+          <h6 class="m-0 font-weight-bold text-primary">Tìm kiếm đề tài</h6>
+        </div>
+      </div>
+      <div class="card-body">
+        <div style="margin-bottom: 30px; margin-left: 150px">
+          <form
+            action="/sinhvien/loc_topic_gv"
+            method="POST"
+            enctype="application/x-www-form-urlencoded"
+          >
+            <table>
+              <tr>
+                <th id="kc1">
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Danh mục đề tài</label>
+                    <select class="form-control" name="IDchude">
+                      <option value="">Chọn chủ đề</option>
+                      <% chude.rows.forEach(function(chude){ %>
+                      <option value="<%= chude.IDchude %>">
+                        <%= chude.tenchude %>
+                      </option>
+                      <% }); %>
+                    </select>
+                  </div>
+                </th>
+                <th id="kc1">
+                  <div class="form-group">
+                    <label for="exampleInputPassword1"
+                      >Tìm kiếm theo bộ môn</label
+                    >
+                    <select class="form-control" name="IDdonvi">
+                      <option value="">Chọn đơn vị</option>
+                      <% donvi.rows.forEach(function(donvi){ %>
+                      <option value="<%= donvi.IDdonvi %>">
+                        <%= donvi.tendonvi %>
+                      </option>
+                      <% }); %>
+                    </select>
+                  </div>
+                </th>
+                <th id="kc5">
+                  <button
+                    type="submit"
+                    style="margin-top: 15px"
+                    class="btn btn-primary"
+                  >
+                    Seach
+                  </button>
+                </th>
+              </tr>
+            </table>
+          </form>
+        </div>
+        <div class="table-responsive">
+          <table
+            class="table table-bordered"
+            id="dataTable"
+            width="100%"
+            cellspacing="0"
+          >
+            <thead>
+              <tr>
+                <th>Bộ môn</th>
+                <th>Tên giảng viên</th>
+                <th>Đề tài</th>
+                <th>Số sinh viên đã đăng ký</th>
+                <th>Tùy chọn</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% ds_gv.rows.forEach(function(ds_gv){ %>
+              <tr>
+                <td><%= ds_gv.tendonvi %></td>
+                <td><%= ds_gv.tengiangvien %></td>
+                <td><%= ds_gv.tendetai %></td>
+                <td><%= ds_gv.sosinhvienthamgia %></td>
+                <td>
+                  <!-- Example single danger button -->
+                  <div class="btn-group">
+                    <a
+                      class="dropdown-item btn btn-primary"
+                      href="<%=ds_gv.IDdetai %>"
+                      data-toggle="modal"
+                      data-target="#detailcate<%=ds_gv.IDdetai %>"
+                      style="
+                        background-color: #4e73df;
+                        color: white;
+                        font-size: 16px;
+                      "
+                    >
+                      Chọn
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <% ds_gv.rows.forEach(function(ds_gv){ %>
+
+    <div
+      class="modal fade"
+      id="detailcate<%=ds_gv.IDdetai %>"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 700px;">
+          <div class="modal-header">
+            <h5
+              class="modal-title"
+              id="exampleModalLabel"
+              style="color: #4e73df"
+            >
+              Thông tin chi tiết đăng ký
+            </h5>
+            <button
+              class="close"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h6
+            class="modal-title"
+            id="exampleModalLabel"
+            style="color: #4e73df"
+          >
+            Thông tin sinh viên đăng ký
+
+          </h6>
+        </br>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="exampleInputPassword1">Mã sinh viên</label>
+                <p><td><%=sinhvien.IDsinhvien %></td></p>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="exampleInputPassword1">Tên sinh viên</label>
+                <p><td><%=sinhvien.tensinhvien %></td></p>
+              </div>
+            </div>
+            <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="exampleInputPassword1">Điểm tích lũy</label>
+              <p><td><%=sinhvien.diemtichluy %></td></p>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="exampleInputPassword1"
+                >Các kỹ năng và kiến thức</label
+              >
+              <p><td><%=sinhvien.kynang %></td></p>
+            </div>
+            </div>
+          </br>
+            <h6
+            class="modal-title"
+            id="exampleModalLabel"
+            style="color: #4e73df"
+          >
+            Đăng ký đề tài
+
+          </h6>
+        </br>
+           
+              <div class="form-group ">
+                <label for="exampleInputPassword1">Giảng viên hướng dẫn</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="IDgiangvien"
+                  value="<%= ds_gv.tengiangvien %>"
+                />
+              </div>
+              <div class="form-group ">
+                <label for="exampleInputPassword1">Đề tài</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="IDdetai"
+                  value="<%= ds_gv.tendetai %>"
+                />
+              </div>
+           
+            <form
+            action="../../sinhvien/dangky_doan"
+              method="POST"
+             
+            >
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <input
+                    type="hidden"
+                    class="form-control"
+                    name="IDgiangvien"
+                    value="<%= ds_gv.IDgiangvien %>"
+                  />
+                </div>
+                <div class="form-group col-md-6">
+                  <input type="hidden" class="form-control" name="IDdetai"
+                  value="<%= ds_gv.IDdetai %>" />
+                </div>
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary">Đăng ký</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% }); %> <%- include("./layout/layout.footer.ejs") %>
+    <%-include("./layout/layout.js.ejs") %>
+  </body>
+</html>

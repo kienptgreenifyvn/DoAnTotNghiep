@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("./layout/layout.css.ejs") %>
+    <style>
+      #kc1,
+      #kc2,
+      #kc3,
+      #kc5 {
+        padding-left: 50px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <%- include("./layout/layout.header.giangvien.ejs") %>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <div class="row">
+          <div class="col-md-4">
+            <h5 class="m-0 font-weight-bold text-primary">
+              Danh sách đề tài của giảng viên
+            </h5>
+          </div>
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+            <a
+              style="text-align: right"
+              class="dropdown-item"
+              href="#"
+              data-toggle="modal"
+              data-target="#addcate"
+            >
+              <i
+                class="fas fa-plus-square"
+                style="font-size: 20px; color: #4e73df"
+              ></i>
+              Thêm đề tài
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table
+            class="table table-bordered"
+            id="dataTable"
+            width="100%"
+            cellspacing="0"
+          >
+            <thead>
+              <tr>
+                <th>Chủ đề</th>
+                <th>Đề tài</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% ds_gv.rows.forEach(function(ds_gv){ %>
+              <tr>
+                <td><%= ds_gv.tenchude %></td>
+                <td><%= ds_gv.tendetai %></td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <form action="/giangvien/them_dangkytopic" method="POST" >
+
+      <div class="modal fade" id="addcate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content" style="width: 700px;">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Thêm mới Đề tài</i></h5>
+                      <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="form-group">
+                          <label for="exampleInputPassword1">ID Đề tài</label>
+                          <input type="text" class="form-control" name="IDdetai" >
+                      </div>
+                      <div class="form-group">
+                          <label for="exampleInputPassword1">Tên Đề tài</label>
+                          <input type="text" class="form-control" name="tendetai" >
+                      </div>
+                  
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Chọn chủ đề</label>
+                        <select name="IDchude" class="form-control">
+                            <% chude.rows.forEach(function(chude){ %>
+                                <option value="<%= chude.IDchude %>">
+                                    <%= chude.tenchude %>
+                                </option>
+                                <% }); %>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 120px;">Thêm đề tài</button>
+                  </div>
+                
+                 
+                  
+              </div>
+          </div>
+      </div>
+  </form>
+    <%- include("./layout/layout.footer.ejs") %>
+    <%-include("./layout/layout.js.ejs") %>
+  </body>
+</html>

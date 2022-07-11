@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("./layout/layout.css.ejs") %>
+    <style>
+      #kc1,
+      #kc2,
+      #kc3,
+      #kc5 {
+        padding-left: 50px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <%- include("./layout/layout.header.giangvien.ejs") %>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <div>
+          <h6 class="m-0 font-weight-bold text-primary">Tìm kiếm đề tài</h6>
+        </div>
+      </div>
+      <div class="card-body">
+        <div style="margin-bottom: 30px; margin-left: 150px">
+          <form
+            action="/sinhvien/loc_topic_gv"
+            method="POST"
+            enctype="application/x-www-form-urlencoded"
+          >
+            <table>
+              <tr>
+                <th id="kc1">
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Danh mục đề tài</label>
+                    <select class="form-control" name="IDchude">
+                      <option value="">Chọn chủ đề</option>
+                      <% chude.rows.forEach(function(chude){ %>
+                      <option value="<%= chude.IDchude %>">
+                        <%= chude.tenchude %>
+                      </option>
+                      <% }); %>
+                    </select>
+                  </div>
+                </th>
+                <th id="kc5">
+                  <button
+                    type="submit"
+                    style="margin-top: 15px"
+                    class="btn btn-primary"
+                  >
+                    Seach
+                  </button>
+                </th>
+              </tr>
+            </table>
+          </form>
+        </div>
+        <div class="table-responsive">
+          <table
+            class="table table-bordered"
+            id="dataTable"
+            width="100%"
+            cellspacing="0"
+          >
+            <thead>
+              <tr>
+                <th>Sinh viên đăng ký</th>
+                <th>Đề tài</th>
+                <th>Tùy chọn</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% ds_sinhviendangky.rows.forEach(function(ds_sinhviendangky){ %>
+              <tr>
+                <td><%= ds_sinhviendangky.tensinhvien %></td>
+                <td><%= ds_sinhviendangky.tendetai %></td>
+                <td>
+                  <!-- Example single danger button -->
+                  <div class="btn-group">
+                    <a
+                      class="dropdown-item btn btn-primary"
+                      href="<%=ds_sinhviendangky.IDgiangvien %>"
+                      data-toggle="modal"
+                      data-target="#detailcate<%=ds_sinhviendangky.IDgiangvien %>"
+                      style="
+                        background-color: #4e73df;
+                        color: white;
+                        font-size: 16px;
+                      "
+                    >
+                      Chi tiết
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <% ds_sinhviendangky.rows.forEach(function(ds_sinhviendangky){ %>
+
+    <div
+    class="modal fade"
+    id="detailcate<%=ds_sinhviendangky.IDgiangvien %>"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" style="width: 700px;">
+        <div class="modal-header">
+          <h5
+            class="modal-title"
+            id="exampleModalLabel"
+            style="color: #4e73df"
+          >
+            Thông tin chi tiết 
+          </h5>
+          <button
+            class="close"
+            type="button"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h6
+          class="modal-title"
+          id="exampleModalLabel"
+          style="color: #4e73df"
+        >
+          Thông tin sinh viên đăng ký
+
+        </h6>
+      </br>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="exampleInputPassword1"><b>Mã sinh viên</b></label>
+              <p><td><%=ds_sinhviendangky.IDsinhvien %></td></p>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="exampleInputPassword1"><b>Tên sinh viên</b></label>
+              <p><td><%=ds_sinhviendangky.tensinhvien %></td></p>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="exampleInputPassword1"><b>Email</b></label>
+              <p><td><%=ds_sinhviendangky.email %></td></p>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="exampleInputPassword1"
+                ><b>Số điện thoại</b></label
+              >
+              <p><td><%=ds_sinhviendangky.sodienthoai %></td></p>
+            </div>
+            </div>
+          <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="exampleInputPassword1"><b>Điểm tích lũy</b></label>
+            <p><td><%=ds_sinhviendangky.diemtichluy %></td></p>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="exampleInputPassword1"
+              ><b>Các kỹ năng và kiến thức</b></label
+            >
+            <p><td><%=ds_sinhviendangky.kynang %></td></p>
+          </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="exampleInputPassword1"><b>Lớp</b></label>
+              <p><td><%=ds_sinhviendangky.tenlop %></td></p>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="exampleInputPassword1"
+                ><b>Đề tài đăng ký</b></label
+              >
+              <p><td><%=ds_sinhviendangky.tendetai %></td></p>
+            </div>
+            </div>
+
+        </br>
+            <ul style="list-style: none;display: flex;">
+                <li > 
+                    <form action="../../giangvien/dongy" method="POST" >
+                        <div class="form-group">
+                          <input type="hidden" name="IDsinhvien" value="<%=ds_sinhviendangky.IDsinhvien %>">
+                          </div>
+
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-primary">Đồng ý</button>
+                    </div>
+                  </form>
+                </li>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <li>
+                    <form action="../../gianhvien/tuchoi" method="POST" >
+                        <div class="form-group">
+                            <input type="hidden" name="IDsinhvien" value="<%=ds_sinhviendangky.IDsinhvien %>">
+                            </div>
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-primary">Từ chối</button>
+                    </div>
+                  </form>
+                </li>
+            </ul>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% }); %><%- include("./layout/layout.footer.ejs") %>
+    <%-include("./layout/layout.js.ejs") %>
+  </body>
+</html>

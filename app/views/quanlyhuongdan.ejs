@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("./layout/layout.css.ejs") %>
+    <style>
+      #kc1,
+      #kc2,
+      #kc3,
+      #kc5 {
+        padding-left: 50px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <%- include("./layout/layout.header.giangvien.ejs") %>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <div>
+          <h5 class="m-0 font-weight-bold text-primary">
+            Danh sách sinh viên hướng dẫn
+          </h5>
+        </div>
+      </div>
+      <div class="card-body">
+        <div style="margin-bottom: 30px; margin-left: 150px">
+          <form
+            action="/sinhvien/loc_topic_gv"
+            method="POST"
+            enctype="application/x-www-form-urlencoded"
+          >
+            <table>
+              <tr>
+                <th id="kc1">
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Danh mục đề tài</label>
+                    <select class="form-control" name="IDchude">
+                      <option value="">Chọn chủ đề</option>
+                      <% chude.rows.forEach(function(chude){ %>
+                      <option value="<%= chude.IDchude %>">
+                        <%= chude.tenchude %>
+                      </option>
+                      <% }); %>
+                    </select>
+                  </div>
+                </th>
+                <th id="kc5">
+                  <button
+                    type="submit"
+                    style="margin-top: 15px"
+                    class="btn btn-primary"
+                  >
+                    Seach
+                  </button>
+                </th>
+              </tr>
+            </table>
+          </form>
+        </div>
+        <div class="table-responsive">
+          <table
+            class="table table-bordered"
+            id="dataTable"
+            width="100%"
+            cellspacing="0"
+          >
+            <thead>
+              <tr>
+                <th>Sinh viên đăng ký</th>
+                <th>Đề tài</th>
+                <th>Tùy chọn</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% huongdan.rows.forEach(function(huongdan){ %>
+              <tr>
+                <td><%= huongdan.tensinhvien %></td>
+                <td><%= huongdan.tendetai %></td>
+                <td>
+                  <!-- Example single danger button -->
+                  <div class="btn-group">
+                    <a
+                      class="dropdown-item btn btn-primary"
+                      href="<%=huongdan.IDgiangvien %>"
+                      data-toggle="modal"
+                      data-target="#detailcate<%=huongdan.IDgiangvien %>"
+                      style="
+                        background-color: #4e73df;
+                        color: white;
+                        font-size: 16px;
+                      "
+                    >
+                      Chi tiết
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <% huongdan.rows.forEach(function(huongdan){ %>
+
+    <div
+      class="modal fade"
+      id="detailcate<%=huongdan.IDgiangvien %>"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 850px">
+          <div class="modal-header">
+            <h5 class="m-0 font-weight-bold text-primary">
+              Thông tin sinh viên hướng dẫn
+            </h5>
+            <button
+              class="close"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="exampleInputPassword1"><b>Mã sinh viên</b></label>
+                <p><td><%=huongdan.IDsinhvien %></td></p>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="exampleInputPassword1"><b>Tên sinh viên</b></label>
+                <p><td><%=huongdan.tensinhvien %></td></p>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="exampleInputPassword1"><b>Email</b></label>
+                <p><td><%=huongdan.email %></td></p>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="exampleInputPassword1"><b>Số điện thoại</b></label>
+                <p><td><%=huongdan.sodienthoai %></td></p>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="exampleInputPassword1"><b>Điểm tích lũy</b></label>
+                <p><td><%=huongdan.diemtichluy %></td></p>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="exampleInputPassword1"
+                  ><b>Các kỹ năng và kiến thức</b></label
+                >
+                <p><td><%=huongdan.kynang %></td></p>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="exampleInputPassword1"><b>Chuyên ngành</b></label>
+                <p><td><%=huongdan.tendonvi %></td></p>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="exampleInputPassword1"><b>Lớp</b></label>
+                <p><td><%=huongdan.tenlop %></td></p>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="exampleInputPassword1"><b>Bậc đào tạo</b></label>
+                <p><td><%=huongdan.bacdaotao %></td></p>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="exampleInputPassword1"><b>Hệ đào tạo</b></label>
+                <p><td><%=huongdan.hedaotao %></td></p>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="exampleInputPassword1"><b>Khóa đạo tạo</b></label>
+                <p><td><%=huongdan.khoadaotao %></td></p>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="exampleInputPassword1"><b>Chủ đề</b></label>
+                <p><td><%=huongdan.tenchude %></td></p>
+              </div>
+              <div class="form-group col-md-8">
+                <label for="exampleInputPassword1"><b>Đề tài đăng ký</b></label>
+                <p><td><%=huongdan.tendetai %></td></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% }); %> <%- include("./layout/layout.footer.ejs") %>
+    <%-include("./layout/layout.js.ejs") %>
+  </body>
+</html>

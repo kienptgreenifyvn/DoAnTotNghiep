@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("./layout/layout.css.ejs") %>
+    <script src="dist/sweetalert.min.js"></script>
+<link rel="stylesheet" type="text/css" href="dist/sweetalert.css">
+
+  </head>
+
+  <body>
+    <%- include("./layout/layout.header.sinhvien.ejs") %>
+    <h5 class="m-0 font-weight-bold text-primary">Đổi mật khẩu</h5></br></br>
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <form
+          action="/sinhvien/capnhatmatkhau"
+          method="POST"
+        >
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="exampleInputPassword1">Mật khẩu cũ</label>
+              <input
+                type="text"
+                class="form-control"
+              />
+            </div>
+            <div class="form-group col-md-4">
+              <label for="exampleInputPassword1">Mật khẩu mới</label>
+              <input
+                type="text"
+                class="form-control"
+                name="password"
+                
+              />
+            </div>
+            <div class="form-group col-md-4">
+              <label for="exampleInputPassword1">Xác nhận mật khẩu</label>
+              <input
+                type="text"
+                class="form-control"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Đổi mật khẩu</button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/sinhvien" class="btn btn-primary">Trở lại</a>
+          </div>
+        </form>
+      </div>
+      <div class="col-2"></div>
+    </div>
+    <%-include("./layout/layout.footer.ejs") %>
+    <%-include("./layout/layout.js.ejs") %>
+  </body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("./layout/layout.css.ejs") %>
+  </head>
+
+  <body>
+    <%- include("./layout/layout.header.sinhvien.ejs") %>
+    <h5 class="m-0 font-weight-bold text-primary">Nộp đồ án</h5>
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <form
+          action="/sinhvien/up_nopdoan"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="exampleInputPassword1">Mã sinh viên</label>
+              <input
+                type="text"
+                class="form-control"
+                name="IDsinhvien"
+                value="<%=IDsinhvien %>"
+                readonly
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label for="exampleInputPassword1">Tên sinh viên</label>
+              <input
+                type="text"
+                class="form-control"
+                name="tensinhvien"
+                value="<%=tensinhvien %>"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="exampleInputPassword1">Giới tính</label>
+              <input
+                type="text"
+                class="form-control"
+                name="gioitinh"
+                value="<%=gioitinh %>"
+                readonly
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label for="exampleInputPassword1">Năm sinh</label>
+              <input
+                type="text"
+                class="form-control"
+                name="namsinh"
+                value="<%=namsinh %>"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="exampleInputPassword1">Số điện thoại</label>
+              <input
+                type="tel"
+                class="form-control"
+                name="sodienthoai"
+                value="<%=sodienthoai %>"
+                readonly
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label for="exampleInputPassword1">Quê quán</label>
+              <input
+                type="tel"
+                class="form-control"
+                name="quequan"
+                value="<%=quequan %>"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="form-row" style="padding-top: 20px">
+            <div class="form-group col-md-4">
+              <label for="exampleInputPassword1">Bậc đào tạo</label>
+              <input
+                type="text"
+                class="form-control"
+                name="bacdaotao"
+                value="<%=bacdaotao %>"
+                readonly
+              />
+            </div>
+            <div class="form-group col-md-4">
+              <label for="exampleInputPassword1">Hệ Đào tạo</label>
+              <input
+                type="text"
+                class="form-control"
+                name="hedaotao"
+                value="<%=hedaotao %>"
+                readonly
+              />
+            </div>
+            <div class="form-group col-md-4">
+              <label for="exampleInputPassword1">Khóa đào tạo</label>
+              <input
+                type="text"
+                class="form-control"
+                name="khoadaotao"
+                value="<%=khoadaotao %>"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="exampleInputPassword1">Lớp</label>
+              <input
+                type="text"
+                class="form-control"
+                name="IDlop"
+                value="<%=IDlop %>"
+                readonly
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label for="exampleInputPassword1">Chủ đề</label>
+              <input
+                type="text"
+                class="form-control"
+                name="IDchude"
+                value="<%=IDchude %>"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="exampleInputPassword1">Giảng viên hướng dẫn</label>
+              <input
+                type="text"
+                class="form-control"
+                name="IDgiangvien"
+                value="<%=IDgiangvien %>"
+                readonly
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label for="exampleInputPassword1">Đề tài</label>
+              <input
+                type="text"
+                class="form-control"
+                name="IDdetai"
+                value="<%=IDdetai %>"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="formFileMultiple" class="form-label"
+              >Nộp đồ án tốt nghiệp</label
+            >
+            <input
+              class="form-control"
+              type="file"
+              name="sourceCode"
+              id="formFileMultiple"
+              multiple
+              required
+            /><%=sourcecode %>
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="hidden"
+              name="id"
+              value="<%=id %>"
+            />
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Nộp đồ án</button>
+          </div>
+        </form>
+      </div>
+      <div class="col-2"></div>
+    </div>
+    <%-include("./layout/layout.footer.ejs") %>
+    <%-include("./layout/layout.js.ejs") %>
+  </body>
+</html>

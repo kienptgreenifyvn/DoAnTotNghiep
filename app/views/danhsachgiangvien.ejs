@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("./layout/layout.css.ejs") %>
+    <style>
+      #avata {
+        width: 100px;
+        height: 50px;
+        clip-path: circle(25px at 50% 50%);
+      }
+      #kc1,
+      #kc2,
+      #kc3,
+      #kc5 {
+        padding-left: 50px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <%- include("./layout/layout.header.sinhvien.ejs") %>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <div class="row">
+          <div class="col-md-4">
+            <h6 class="m-0 font-weight-bold text-primary">
+              Quản lý giảng viên
+            </h6>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div style="margin-bottom: 30px; margin-left: 150px">
+          <form
+            action="/sinhvien/loc_giangvien"
+            method="POST"
+            enctype="application/x-www-form-urlencoded"
+          >
+            <table>
+              <tr>
+                <th id="kc1">
+                  <div class="form-group">
+                    <label for="exampleInputPassword1"
+                      >Đề tài theo chuyên ngành</label
+                    >
+                    <select class="form-control" name="IDdonvi">
+                      <option value="">Chọn đơn vị</option>
+                      <% donvi.rows.forEach(function(donvi){ %>
+                      <option value="<%= donvi.IDdonvi %>">
+                        <%= donvi.tendonvi %>
+                      </option>
+                      <% }); %>
+                    </select>
+                  </div>
+                </th>
+                <th id="kc5">
+                  <button
+                    type="submit"
+                    style="margin-top: 15px"
+                    class="btn btn-primary"
+                  >
+                    Tìm kiếm
+                  </button>
+                </th>
+              </tr>
+            </table>
+          </form>
+        </div>
+        <div class="table-responsive">
+          <table
+            class="table table-bordered"
+            id="dataTable"
+            width="100%"
+            cellspacing="0"
+          >
+            <thead>
+              <tr>
+                <th>Ảnh giảng viên</th>
+                <th>Tên giảng viên</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+                <th>Chuyên ngành</th>
+                <th>Tùy chọn</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% ds_giangvien.rows.forEach(function(ds_giangvien){ %>
+              <tr>
+                <td>
+                  <img
+                    src="http://localhost:8008/uploads/<%=ds_giangvien.anhgiangvien %>"
+                    id="avata"
+                  />
+                </td>
+                <td><%= ds_giangvien.tengiangvien %></td>
+                <td><%= ds_giangvien.email %></td>
+                <td><%= ds_giangvien.sodienthoai %></td>
+                <td><%= ds_giangvien.tendonvi %></td>
+
+                <td>
+                  <div class="btn-group">
+                    <a
+                      class="dropdown-item btn btn-primary"
+                      href="<%=ds_giangvien.IDgiangvien %>"
+                      data-toggle="modal"
+                      data-target="#detailcate<%=ds_giangvien.IDgiangvien %>"
+                      style="
+                        background-color: #4e73df;
+                        color: white;
+                        font-size: 16px;
+                      "
+                      >Chi tiết
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <% ds_giangvien.rows.forEach(function(ds_giangvien){ %>
+    <div
+      class="modal fade"
+      id="detailcate<%=ds_giangvien.IDgiangvien %>"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 700px">
+          <div class="modal-header">
+            <h5
+              class="modal-title"
+              id="exampleModalLabel"
+              style="color: #4e73df"
+            >
+              Chi tiết giảng viên
+            </h5>
+            <button
+              class="close"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th>ID giảng viên</th>
+                  <td><%= ds_giangvien.IDgiangvien %></td>
+                </tr>
+                <tr>
+                  <th>Tên giảng viên</th>
+                  <td><%= ds_giangvien.tengiangvien %></td>
+                </tr>
+                <tr>
+                  <th>Giới tính</th>
+                  <td><%= ds_giangvien.gioitinh %></td>
+                </tr>
+                <tr>
+                  <th>Năm sinh</th>
+                  <td><%= ds_giangvien.namsinh %></td>
+                </tr>
+                <tr>
+                  <th>Email</th>
+                  <td><%= ds_giangvien.email %></td>
+                </tr>
+                <tr>
+                  <th>Số điện thoại</th>
+                  <td><%= ds_giangvien.sodienthoai %></td>
+                </tr>
+                <tr>
+                  <th>Địa chỉ</th>
+                  <td><%= ds_giangvien.diachi %></td>
+                </tr>
+                <tr>
+                  <th>Ảnh giảng viên</th>
+                  <td>
+                    <img
+                      src="http://localhost:8008/uploads/<%=ds_giangvien.anhgiangvien %>"
+                      style="width: 100px"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th>Hướng nghiên cứu</th>
+                  <td><%= ds_giangvien.huongnghiencuu %></td>
+                </tr>
+                <tr>
+                  <th>Học vị</th>
+                  <td><%= ds_giangvien.hocvi %></td>
+                </tr>
+                <tr>
+                  <th>Chức vụ</th>
+                  <td><%= ds_giangvien.chucvu %></td>
+                </tr>
+                <tr>
+                  <th>Khoa</th>
+                  <td><%= ds_giangvien.Khoa %></td>
+                </tr>
+                <tr>
+                  <th>Chuyên ngành</th>
+                  <td><%= ds_giangvien.tendonvi %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% }); %> <%- include("./layout/layout.footer.ejs") %>
+    <%-include("./layout/layout.js.ejs") %>
+  </body>
+</html>
