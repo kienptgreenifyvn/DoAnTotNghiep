@@ -10,7 +10,7 @@ exports.danhsach_detai_sv = (req, res) => {
       return console.error("error", err);
     }
     client.query(
-      `SELECT * FROM detais inner join chudes on detais."IDchude" = chudes."IDchude" inner join sinhviens on detais."IDdetai" = sinhviens."IDchude" inner join giangviens on giangviens."IDgiangvien" = detais."IDgiangvien" inner join donvis on donvis."IDdonvi" = detais."IDdonvi" `,
+      `SELECT * FROM detais inner join chudes on detais."IDchude" = chudes."IDchude" inner join sinhviens on detais."IDdetai" = sinhviens."IDsinhvien" inner join giangviens on giangviens."IDgiangvien" = detais."IDgiangvien" inner join donvis on donvis."IDdonvi" = giangviens."IDdonvi" where detais."isActive" = true  `,
       function (err, result) {
         done();
 
@@ -66,13 +66,13 @@ exports.loc_detai = (req, res) => {
       return console.error("error", err);
     }
     client.query(
-      `SELECT * FROM detais inner join chudes on detais."IDchude" = chudes."IDchude" inner join sinhviens on detais."IDdetai" = sinhviens."IDchude" inner join giangviens on giangviens."IDgiangvien" = detais."IDgiangvien" inner join donvis on donvis."IDdonvi" = detais."IDdonvi" where 1 = 1 ${
+      `SELECT * FROM detais inner join chudes on detais."IDchude" = chudes."IDchude" inner join sinhviens on detais."IDdetai" = sinhviens."IDsinhvien" inner join giangviens on giangviens."IDgiangvien" = detais."IDgiangvien" inner join donvis on donvis."IDdonvi" = giangviens."IDdonvi" where detais."isActive" = true  and 1 = 1 ${
         req.body.IDchude != ""
           ? ` and detais."IDchude" = ${req.body.IDchude}`
           : ""
       } ${
         req.body.IDdonvi != ""
-          ? ` and detais."IDdonvi" = ${req.body.IDdonvi}`
+          ? ` and giangviens."IDdonvi" = ${req.body.IDdonvi}`
           : ""
       } `,
       function (err, result) {
@@ -130,7 +130,7 @@ exports.danhsach_detai_gv = (req, res) => {
       return console.error("error", err);
     }
     client.query(
-      `SELECT * FROM detais inner join chudes on detais."IDchude" = chudes."IDchude" inner join sinhviens on detais."IDdetai" = sinhviens."IDchude" inner join giangviens on giangviens."IDgiangvien" = detais."IDgiangvien" inner join donvis on donvis."IDdonvi" = detais."IDdonvi" `,
+      `SELECT * FROM detais inner join chudes on detais."IDchude" = chudes."IDchude" inner join sinhviens on detais."IDdetai" = sinhviens."IDsinhvien" inner join giangviens on giangviens."IDgiangvien" = detais."IDgiangvien" inner join donvis on donvis."IDdonvi" = giangviens."IDdonvi" where detais."isActive" = true `,
       function (err, result) {
         done();
 
@@ -170,7 +170,7 @@ exports.loc_detaigv = (req, res) => {
       return console.error("error", err);
     }
     client.query(
-      `SELECT * FROM detais inner join chudes on detais."IDchude" = chudes."IDchude" inner join sinhviens on detais."IDdetai" = sinhviens."IDchude" inner join giangviens on giangviens."IDgiangvien" = detais."IDgiangvien" inner join donvis on donvis."IDdonvi" = detais."IDdonvi" where 1 = 1 ${
+      `SELECT * FROM detais inner join chudes on detais."IDchude" = chudes."IDchude" inner join sinhviens on detais."IDdetai" = sinhviens."IDsinhvien" inner join giangviens on giangviens."IDgiangvien" = detais."IDgiangvien" inner join donvis on donvis."IDdonvi" = giangviens."IDdonvi" where detais."isActive" = true and 1 = 1 ${
         req.body.IDchude != ""
           ? ` and detais."IDchude" = ${req.body.IDchude}`
           : ""

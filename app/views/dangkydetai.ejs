@@ -212,29 +212,25 @@
                 />
               </div>
            
-            <form
-            action="../../sinhvien/dangky_doan"
-              method="POST"
-             
-            >
+           
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <input
                     type="hidden"
                     class="form-control"
-                    name="IDgiangvien"
+                    name="IDgiangvien" id="IDgiangvien"
                     value="<%= ds_gv.IDgiangvien %>"
                   />
                 </div>
                 <div class="form-group col-md-6">
-                  <input type="hidden" class="form-control" name="IDdetai"
+                  <input type="hidden" class="form-control" name="IDdetai" id="IDdetai"
                   value="<%= ds_gv.IDdetai %>" />
                 </div>
               </div>
               <div class="form-group">
-                <button type="submit" class="btn btn-primary">Đăng ký</button>
+                <button type="button" id="dangky" class="btn btn-primary" data-dismiss="modal"
+                >Đăng ký</button>
               </div>
-            </form>
           </div>
         </div>
       </div>
@@ -242,5 +238,25 @@
 
     <% }); %> <%- include("./layout/layout.footer.ejs") %>
     <%-include("./layout/layout.js.ejs") %>
+    <script>
+      $(document).ready(function () {
+        $("#dangky").click(async function () { var data = await {
+      IDdetai: document.getElementById("IDdetai").value,
+      IDgiangvien: document.getElementById("IDgiangvien").value,
+     
+    };
+    var f = await fetch("http://localhost:8008/sinhvien/dangky_doan", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then(response => response.json())
+  .then(data => alert(data.message));;
+   });
+        
+    
+});
+    </script>
   </body>
 </html>

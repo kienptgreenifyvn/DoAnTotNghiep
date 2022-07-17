@@ -6,6 +6,7 @@ const cors = require("cors");
 const db = require("./app/models");
 const Sequelize = require("sequelize");
 const session = require("express-session");
+const flash = require("connect-flash");
 const app = express();
 var corsOptions = {
   origin: "http://localhost:8081",
@@ -29,34 +30,17 @@ app.use(
     cookie: { secure: true },
   })
 );
-
+app.use(flash());
 const PORT = process.env.PORT || 8008;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
-const dbc = require("./app/models");
-// const Role = dbc.role;
+// const dbc = require("./app/models");
 // dbc.sequelize.sync({ force: true }).then(() => {
 //   console.log("Drop and Resync Db");
-//   initial();
 // });
-// function initial() {
-//   Role.create({
-//     id: 1,
-//     name: "user",
-//   });
 
-//   Role.create({
-//     id: 2,
-//     name: "moderator",
-//   });
-
-//   Role.create({
-//     id: 3,
-//     name: "admin",
-//   });
-// }
 require("./app/routes/auth.routes")(app);
 require("./app/routes/taikhoan.routes")(app);
 require("./app/routes/index.routes")(app);

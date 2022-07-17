@@ -3,7 +3,9 @@ const Sinhvien = db.sinhvien;
 
 exports.nopdoan = (req, res) => {
   const sinhvien = req.session.sinhvien;
-  res.status(200).render("nopdoan.ejs", sinhvien);
+  const k = new Date(sinhvien.namsinh).getDate();
+  console.log(k);
+  res.status(200).render("nopdoan.ejs", { sinhvien, k });
 };
 exports.capnhat_doan = async (req, res) => {
   const sinhvien = req.session.sinhvien;

@@ -7,14 +7,15 @@ module.exports = (sequelize, Sequelize) => {
     tendetai: {
       type: Sequelize.TEXT,
     },
-    sosinhvienthamgia: {
-      type: Sequelize.INTEGER,
+    thoigianbatdau: {
+      type: Sequelize.DATE,
     },
-    nam: {
-      type: Sequelize.INTEGER,
+    thoigianketthuc: {
+      type: Sequelize.DATE,
     },
-    nhanxetchung: {
-      type: Sequelize.STRING,
+    isActive: {
+      type: Sequelize.BOOLEAN,
+      default: false,
     },
   });
   return Detai;

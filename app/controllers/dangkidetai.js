@@ -12,7 +12,7 @@ exports.topic_gv = (req, res) => {
       return console.error("error", err);
     }
     client.query(
-      `SELECT detais.*,giangviens."tengiangvien",giangviens."IDgiangvien", donvis."tendonvi", donvis."IDdonvi" FROM detais inner join chudes on detais."IDchude" = chudes."IDchude" inner join giangviens on giangviens."IDgiangvien" = detais."IDgiangvien" inner join donvis on donvis."IDdonvi" = detais."IDdonvi" `,
+      `SELECT detais.*,giangviens."tengiangvien",giangviens."IDgiangvien", donvis."tendonvi", donvis."IDdonvi" FROM detais inner join chudes on detais."IDchude" = chudes."IDchude" inner join sinhviens on detais."IDdetai" = sinhviens."IDsinhvien" inner join giangviens on giangviens."IDgiangvien" = detais."IDgiangvien" inner join donvis on donvis."IDdonvi" = giangviens."IDdonvi" where detais."isActive" =false `,
       function (err, result) {
         done();
         if (err) {
@@ -64,18 +64,19 @@ exports.topic_gv = (req, res) => {
 
 exports.loc_topic_gv = (req, res) => {
   const sinhvien = req.session.sinhvien;
+
   pool_db.connect(function (err, client, done) {
     if (err) {
       return console.error("error", err);
     }
     client.query(
-      `SELECT detais.*,giangviens."tengiangvien",giangviens."IDgiangvien", donvis."tendonvi", donvis."IDdonvi" FROM detais inner join chudes on detais."IDchude" = chudes."IDchude" inner join sinhviens on detais."IDdetai" = sinhviens."IDchude" inner join giangviens on giangviens."IDgiangvien" = detais."IDgiangvien" inner join donvis on donvis."IDdonvi" = detais."IDdonvi"  where 1 = 1 ${
+      `SELECT detais.*,giangviens."tengiangvien",giangviens."IDgiangvien", donvis."tendonvi", donvis."IDdonvi" FROM giangviens  inner join detais on giangviens."IDgiangvien" = detais."IDgiangvien" inner join donvis on donvis."IDdonvi" = giangviens."IDdonvi"  where  detais."isActive" = false and 1 = 1 ${
         req.body.IDchude != ""
           ? ` and detais."IDchude" = ${req.body.IDchude}`
           : ""
       } ${
         req.body.IDdonvi != ""
-          ? ` and detais."IDdonvi" = ${req.body.IDdonvi}`
+          ? ` and giangviens."IDdonvi" = ${req.body.IDdonvi}`
           : ""
       }`,
       function (err, result) {
@@ -142,7 +143,8 @@ exports.dangky_doan = async (req, res) => {
     }
   )
     .then(() => {
-      res.status(200).redirect("../../sinhvien/dangkydetai");
+      res.json({ message: "Bạn đã đăng ký thành công!" });
+      //res.status(200).redirect("../../sinhvien/dangkydetai");
     })
     .catch((err) => {
       res.status(500).send({ message: err.message });
@@ -190,15 +192,38 @@ exports.dangky_topic = (req, res) => {
   });
 };
 
-exports.them_dangkytopic = (req, res) => {
+exports.them_dangkytopic = async (req, res) => {
   const giangvien = req.session.giangvien;
-  console.log(giangvien);
-  Detai.create({
-    IDdetai: req.body.IDdetai,
-    tendetai: req.body.tendetai,
-    IDchude: req.body.IDchude,
-    IDgiangvien: giangvien.IDgiangvien,
-  }).then(() => {
-    res.redirect("../../giangvien/dangkytopic");
+  const Iddetai = await Detai.findAll();
+  pool_db.connect(function (err, client, done) {
+    if (err) {
+      return console.error("error", err);
+    }
+    client.query(
+      `SELECT detais."IDdetai" FROM detais `,
+      function (err, result) {
+        done();
+
+        if (err) {
+          res.end();
+          return console.error("error running query", err);
+        } else {
+          const detai = result.rows.map((e) => {
+            return e.IDdetai;
+          });
+          const max = Math.max.apply(Math, detai);
+          Detai.create({
+            IDdetai: max + 1,
+            tendetai: req.body.tendetai,
+            IDchude: req.body.IDchude,
+            isActive: false,
+            IDgiangvien: giangvien.IDgiangvien,
+          }).then(() => {
+            res.json({ message: "Thêm đề tài thành công!" });
+            // res.redirect("../../giangvien/dangkytopic");
+          });
+        }
+      }
+    );
   });
 };

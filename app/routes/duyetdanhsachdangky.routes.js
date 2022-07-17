@@ -14,7 +14,23 @@ module.exports = function (app) {
     requireLogin,
     controller.danhsachsinhviendangky
   );
+  app.post(
+    "/giangvien/loc_danhsachsinhviendangky",
+    requireLogin,
+    controller.loc_danhsachsinhviendangky
+  );
   app.get("/giangvien/svhuongdanh", requireLogin, controller.quanlyhuongdan);
+  app.post(
+    "/giangvien/loc_quanlyhuongdan",
+    requireLogin,
+    controller.loc_quanlyhuongdan
+  );
   app.post("/giangvien/dongy", controller.chapnhan);
   app.post("/gianhvien/tuchoi", controller.tuchoi);
+
+  app.get(
+    "/giangvien/doandahuongdan",
+    requireLogin,
+    controller.quanlydoanhuongdan
+  );
 };

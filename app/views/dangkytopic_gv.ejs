@@ -69,7 +69,7 @@
         </div>
       </div>
     </div>
-    <form action="/giangvien/them_dangkytopic" method="POST" >
+   
 
       <div class="modal fade" id="addcate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
           aria-hidden="true">
@@ -83,17 +83,13 @@
                   </div>
                   <div class="modal-body">
                       <div class="form-group">
-                          <label for="exampleInputPassword1">ID Đề tài</label>
-                          <input type="text" class="form-control" name="IDdetai" >
-                      </div>
-                      <div class="form-group">
                           <label for="exampleInputPassword1">Tên Đề tài</label>
-                          <input type="text" class="form-control" name="tendetai" >
+                          <input type="text" class="form-control" name="tendetai"  id="tendetai" >
                       </div>
                   
                     <div class="form-group">
                         <label for="exampleInputPassword1">Chọn chủ đề</label>
-                        <select name="IDchude" class="form-control">
+                        <select name="IDchude" id="IDchude" class="form-control">
                             <% chude.rows.forEach(function(chude){ %>
                                 <option value="<%= chude.IDchude %>">
                                     <%= chude.tenchude %>
@@ -101,7 +97,7 @@
                                 <% }); %>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width: 120px;">Thêm đề tài</button>
+                    <button type="submit" class="btn btn-primary" id="dangky" style="width: 120px;" data-dismiss="modal">Thêm đề tài</button>
                   </div>
                 
                  
@@ -109,8 +105,28 @@
               </div>
           </div>
       </div>
-  </form>
+
     <%- include("./layout/layout.footer.ejs") %>
     <%-include("./layout/layout.js.ejs") %>
+    <script>
+      $(document).ready(function () {
+        $("#dangky").click(async function () { var data = await {
+          tendetai: document.getElementById("tendetai").value,
+          IDchude: document.getElementById("IDchude").value,
+     
+    };
+    var f = await fetch("http://localhost:8008/giangvien/them_dangkytopic", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then(response => response.json())
+  .then(data => alert(data.message));;
+   });
+        
+    
+});
+    </script>
   </body>
 </html>

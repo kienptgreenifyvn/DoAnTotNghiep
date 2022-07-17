@@ -12,11 +12,22 @@ module.exports = function (app) {
   app.get(
     "/sinhvien/thongtintaikhoan",
     permission.requireLogin,
-    controller.thongtintaikhoan
+    controller.thongtintaikhoan_sv
   );
   app.post(
     "/sinhvien/capnhatthongtin",
     permission.requireLogin,
-    controller.capnhatthongtin
+    controller.capnhatthongtin_sv
+  );
+
+  app.get(
+    "/giangvien/thongtintaikhoan",
+    permission.requireLogin,
+    controller.thongtintaikhoan_gv
+  );
+  app.post(
+    "/giangvien/capnhatthongtin",
+    permission.requireLogin,
+    controller.capnhatthongtin_gv
   );
 };

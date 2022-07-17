@@ -22,7 +22,7 @@
                 type="text"
                 class="form-control"
                 name="IDsinhvien"
-                value="<%=IDsinhvien %>"
+                value="<%=sinhvien.IDsinhvien %>"
                 readonly
               />
             </div>
@@ -32,7 +32,7 @@
                 type="text"
                 class="form-control"
                 name="tensinhvien"
-                value="<%=tensinhvien %>"
+                value="<%=sinhvien.tensinhvien %>"
                 readonly
               />
             </div>
@@ -44,7 +44,7 @@
                 type="text"
                 class="form-control"
                 name="gioitinh"
-                value="<%=gioitinh %>"
+                value="<%=sinhvien.gioitinh %>"
                 readonly
               />
             </div>
@@ -54,7 +54,7 @@
                 type="text"
                 class="form-control"
                 name="namsinh"
-                value="<%=namsinh %>"
+                value="<%=k %>"
                 readonly
               />
             </div>
@@ -66,7 +66,7 @@
                 type="tel"
                 class="form-control"
                 name="sodienthoai"
-                value="<%=sodienthoai %>"
+                value="<%=sinhvien.sodienthoai %>"
                 readonly
               />
             </div>
@@ -76,7 +76,7 @@
                 type="tel"
                 class="form-control"
                 name="quequan"
-                value="<%=quequan %>"
+                value="<%=sinhvien.quequan %>"
                 readonly
               />
             </div>
@@ -88,7 +88,7 @@
                 type="text"
                 class="form-control"
                 name="bacdaotao"
-                value="<%=bacdaotao %>"
+                value="<%=sinhvien.bacdaotao %>"
                 readonly
               />
             </div>
@@ -98,7 +98,7 @@
                 type="text"
                 class="form-control"
                 name="hedaotao"
-                value="<%=hedaotao %>"
+                value="<%=sinhvien.hedaotao %>"
                 readonly
               />
             </div>
@@ -108,7 +108,7 @@
                 type="text"
                 class="form-control"
                 name="khoadaotao"
-                value="<%=khoadaotao %>"
+                value="<%=sinhvien.khoadaotao %>"
                 readonly
               />
             </div>
@@ -120,43 +120,33 @@
                 type="text"
                 class="form-control"
                 name="IDlop"
-                value="<%=IDlop %>"
+                value="<%=sinhvien.IDlop %>"
                 readonly
               />
             </div>
-            <div class="form-group col-md-6">
-              <label for="exampleInputPassword1">Chủ đề</label>
-              <input
-                type="text"
-                class="form-control"
-                name="IDchude"
-                value="<%=IDchude %>"
-                readonly
-              />
-            </div>
-          </div>
-          <div class="form-row">
             <div class="form-group col-md-6">
               <label for="exampleInputPassword1">Giảng viên hướng dẫn</label>
               <input
                 type="text"
                 class="form-control"
                 name="IDgiangvien"
-                value="<%=IDgiangvien %>"
-                readonly
-              />
-            </div>
-            <div class="form-group col-md-6">
-              <label for="exampleInputPassword1">Đề tài</label>
-              <input
-                type="text"
-                class="form-control"
-                name="IDdetai"
-                value="<%=IDdetai %>"
+                value="<%=sinhvien.IDgiangvien %>"
                 readonly
               />
             </div>
           </div>
+
+          <div class="form-group">
+            <label for="exampleInputPassword1">Đề tài</label>
+            <input
+              type="text"
+              class="form-control"
+              name="IDdetai"
+              value="<%=sinhvien.IDdetai %>"
+              readonly
+            />
+          </div>
+
           <div class="form-group">
             <label for="formFileMultiple" class="form-label"
               >Nộp đồ án tốt nghiệp</label
@@ -168,14 +158,14 @@
               id="formFileMultiple"
               multiple
               required
-            /><%=sourcecode %>
+            /><%=sinhvien.sourcecode %>
           </div>
           <div class="form-group">
             <input
               class="form-control"
               type="hidden"
               name="id"
-              value="<%=id %>"
+              value="<%= sinhvien.id %>"
             />
           </div>
           <div class="form-group">

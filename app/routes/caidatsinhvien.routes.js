@@ -19,4 +19,14 @@ module.exports = function (app) {
     permission.requireLogin,
     controller.capnhatmatkhau
   );
+  app.get(
+    "/giangvien/caidat",
+    permission.requireLogin,
+    controller.caidatgiangvien
+  );
+  app.post(
+    "/giangvien/capnhatmatkhau",
+    permission.requireLogin,
+    controller.capnhatmatkhau_gv
+  );
 };

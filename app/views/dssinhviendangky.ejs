@@ -25,7 +25,7 @@
       <div class="card-body">
         <div style="margin-bottom: 30px; margin-left: 150px">
           <form
-            action="/sinhvien/loc_topic_gv"
+            action="/giangvien/loc_danhsachsinhviendangky"
             method="POST"
             enctype="application/x-www-form-urlencoded"
           >
@@ -33,12 +33,25 @@
               <tr>
                 <th id="kc1">
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Danh mục đề tài</label>
+                    <label for="exampleInputPassword1">Chuyên ngành</label>
                     <select class="form-control" name="IDchude">
-                      <option value="">Chọn chủ đề</option>
+                      <option value="">Chọn chuyên ngành</option>
                       <% chude.rows.forEach(function(chude){ %>
                       <option value="<%= chude.IDchude %>">
                         <%= chude.tenchude %>
+                      </option>
+                      <% }); %>
+                    </select>
+                  </div>
+                </th>
+                <th id="kc1">
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Lớp</label>
+                    <select class="form-control" name="IDlop">
+                      <option value="">Chọn lớp</option>
+                      <% lop.rows.forEach(function(lop){ %>
+                      <option value="<%= lop.IDlop %>">
+                        <%= lop.tenlop %>
                       </option>
                       <% }); %>
                     </select>
