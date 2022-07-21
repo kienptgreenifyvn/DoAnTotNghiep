@@ -10,6 +10,7 @@
         padding-left: 50px;
       }
     </style>
+    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/styles/metro/notify-metro.css" />
   </head>
 
   <body>
@@ -19,57 +20,10 @@
     <div class="card shadow mb-4">
       <div class="card-header py-3">
         <div>
-          <h6 class="m-0 font-weight-bold text-primary">Tìm kiếm đề tài</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Danh sách đề tài đã được đăng ký</h6>
         </div>
       </div>
       <div class="card-body">
-        <div style="margin-bottom: 30px; margin-left: 150px">
-          <form
-            action="/giangvien/loc_danhsachsinhviendangky"
-            method="POST"
-            enctype="application/x-www-form-urlencoded"
-          >
-            <table>
-              <tr>
-                <th id="kc1">
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Chuyên ngành</label>
-                    <select class="form-control" name="IDchude">
-                      <option value="">Chọn chuyên ngành</option>
-                      <% chude.rows.forEach(function(chude){ %>
-                      <option value="<%= chude.IDchude %>">
-                        <%= chude.tenchude %>
-                      </option>
-                      <% }); %>
-                    </select>
-                  </div>
-                </th>
-                <th id="kc1">
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Lớp</label>
-                    <select class="form-control" name="IDlop">
-                      <option value="">Chọn lớp</option>
-                      <% lop.rows.forEach(function(lop){ %>
-                      <option value="<%= lop.IDlop %>">
-                        <%= lop.tenlop %>
-                      </option>
-                      <% }); %>
-                    </select>
-                  </div>
-                </th>
-                <th id="kc5">
-                  <button
-                    type="submit"
-                    style="margin-top: 15px"
-                    class="btn btn-primary"
-                  >
-                    Seach
-                  </button>
-                </th>
-              </tr>
-            </table>
-          </form>
-        </div>
         <div class="table-responsive">
           <table
             class="table table-bordered"
@@ -79,32 +33,32 @@
           >
             <thead>
               <tr>
-                <th>Sinh viên đăng ký</th>
+               
                 <th>Đề tài</th>
                 <th>Tùy chọn</th>
               </tr>
             </thead>
 
             <tbody>
-              <% ds_sinhviendangky.rows.forEach(function(ds_sinhviendangky){ %>
+              <% ds_detai.rows.forEach(function(ds_detai){ %>
               <tr>
-                <td><%= ds_sinhviendangky.tensinhvien %></td>
-                <td><%= ds_sinhviendangky.tendetai %></td>
+                
+                <td><%= ds_detai.tendetai %></td>
                 <td>
                   <!-- Example single danger button -->
                   <div class="btn-group">
                     <a
                       class="dropdown-item btn btn-primary"
-                      href="<%=ds_sinhviendangky.IDgiangvien %>"
+                      href="<%=ds_detai.IDgiangvien %>"
                       data-toggle="modal"
-                      data-target="#detailcate<%=ds_sinhviendangky.IDgiangvien %>"
+                      data-target="#detailcate<%=ds_detai.IDdetai %>"
                       style="
                         background-color: #4e73df;
                         color: white;
                         font-size: 16px;
                       "
                     >
-                      Chi tiết
+                      Xem danh sách
                     </a>
                   </div>
                 </td>
@@ -115,26 +69,27 @@
         </div>
       </div>
     </div>
-    <% ds_sinhviendangky.rows.forEach(function(ds_sinhviendangky){ %>
-
+   
+      <% ds_detai.rows.forEach(function(ds_detai){ %>
     <div
     class="modal fade"
-    id="detailcate<%=ds_sinhviendangky.IDgiangvien %>"
+    id="detailcate<%=ds_detai.IDdetai %>"
     tabindex="-1"
     role="dialog"
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog" role="document">
-      <div class="modal-content" style="width: 700px;">
+      <div class="modal-content" style="width: 900px;">
         <div class="modal-header">
-          <h5
-            class="modal-title"
-            id="exampleModalLabel"
-            style="color: #4e73df"
-          >
-            Thông tin chi tiết 
-          </h5>
+          <h6
+          class="modal-title"
+          id="exampleModalLabel"
+          style="color: #4e73df; font-weight: bold;"
+        >
+          Danh sách sinh viên chọn đề tài 
+
+        </h6>
           <button
             class="close"
             type="button"
@@ -145,93 +100,231 @@
           </button>
         </div>
         <div class="modal-body">
-          <h6
-          class="modal-title"
-          id="exampleModalLabel"
-          style="color: #4e73df"
-        >
-          Thông tin sinh viên đăng ký
-
-        </h6>
       </br>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="exampleInputPassword1"><b>Mã sinh viên</b></label>
-              <p><td><%=ds_sinhviendangky.IDsinhvien %></td></p>
+      
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              
             </div>
-            <div class="form-group col-md-6">
-              <label for="exampleInputPassword1"><b>Tên sinh viên</b></label>
-              <p><td><%=ds_sinhviendangky.tensinhvien %></td></p>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="exampleInputPassword1"><b>Email</b></label>
-              <p><td><%=ds_sinhviendangky.email %></td></p>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="exampleInputPassword1"
-                ><b>Số điện thoại</b></label
-              >
-              <p><td><%=ds_sinhviendangky.sodienthoai %></td></p>
-            </div>
-            </div>
-          <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="exampleInputPassword1"><b>Điểm tích lũy</b></label>
-            <p><td><%=ds_sinhviendangky.diemtichluy %></td></p>
-          </div>
-          <div class="form-group col-md-6">
-            <label for="exampleInputPassword1"
-              ><b>Các kỹ năng và kiến thức</b></label
-            >
-            <p><td><%=ds_sinhviendangky.kynang %></td></p>
-          </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="exampleInputPassword1"><b>Lớp</b></label>
-              <p><td><%=ds_sinhviendangky.tenlop %></td></p>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="exampleInputPassword1"
-                ><b>Đề tài đăng ký</b></label
-              >
-              <p><td><%=ds_sinhviendangky.tendetai %></td></p>
-            </div>
-            </div>
-
-        </br>
-            <ul style="list-style: none;display: flex;">
-                <li > 
-                    <form action="../../giangvien/dongy" method="POST" >
-                        <div class="form-group">
-                          <input type="hidden" name="IDsinhvien" value="<%=ds_sinhviendangky.IDsinhvien %>">
-                          </div>
-
-                    <div class="form-group">
-                      <button type="submit" class="btn btn-primary">Đồng ý</button>
-                    </div>
-                  </form>
-                </li>&nbsp;&nbsp;&nbsp;&nbsp;
-                  <li>
-                    <form action="../../gianhvien/tuchoi" method="POST" >
-                        <div class="form-group">
-                            <input type="hidden" name="IDsinhvien" value="<%=ds_sinhviendangky.IDsinhvien %>">
-                            </div>
-                    <div class="form-group">
-                      <button type="submit" class="btn btn-primary">Từ chối</button>
-                    </div>
-                  </form>
-                </li>
-            </ul>
+            <div class="card-body">
+             
+              <div class="table-responsive">
+                <table
+                  class="table table-bordered"
+                  id="dataTable"
+                  width="100%"
+                  cellspacing="0"
+                >
+                <thead>
+                  <tr>
+                   <th>Sinh viên</th>
+                   <th>Chuyên ngành</th>
+                   <th>Lớp</th>
+                    <th>Đề tài</th>
+                    <th>Tùy chọn</th>
+                  </tr>
+                </thead>
+                <% ds_sinhvien.rows.forEach(function(ds_sinhvien){ %>
+                  <% if (ds_sinhvien.IDdetai == ds_detai.IDdetai) { %>
+                <tbody>
+                 
+                  <tr>
+                    <td><%= ds_sinhvien.tensinhvien %></td>
+                    <td><%= ds_sinhvien.tendonvi %></td>
+                    <td><%= ds_sinhvien.tenlop %></td>
+                    <td><%= ds_sinhvien.tendetai %></td>
+                    <td>
+                      <div class="btn-group">
+                        <button
+                          class="dropdown-item btn btn-primary"
+                         
+                          data-toggle="modal"
+                          data-target="#sinhvien<%=ds_sinhvien.IDsinhvien %>"
+                          style="
+                            background-color: #4e73df;
+                            color: white;
+                            font-size: 16px;
+                            height:38px ;
+                       
+                          "
+                        >
+                          Chi tiết
+                        </button>
+                      </div>
+                      
+                      <!-- Example single danger button -->
+                   
+              
+                    </td>
+                  </tr>
+                 
         
+                </tbody>
+                <% } %>
+         
+                <% }); %>  
+                </table>
+              </div>
+            </div>
+          </div>   
         </div>
       </div>
     </div>
   </div>
+<% ds_sinhvien.rows.forEach(function(ds_sinhvien){ %>
+  <div class="modal fade" id="sinhvien<%=ds_sinhvien.IDsinhvien %>" tabindex="-1" role="dialog"
+   aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+       <div class="modal-content" style="width:910px ;">
+           <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">Chi tiết sinh viên</h5>
+               <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">×</span>
+               </button>
+           </div>
+           <div class="modal-body">
+            <h6
+            class="modal-title"
+            id="exampleModalLabel"
+            style="color: #4e73df"
+          >
+            Thông tin sinh viên đăng ký
+          </h6>
+        </br>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="exampleInputPassword1"><b>Mã sinh viên</b></label>
+                <p><td><%=ds_sinhvien.IDsinhvien %></td></p>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="exampleInputPassword1"><b>Tên sinh viên</b></label>
+                <p><td><%=ds_sinhvien.tensinhvien %></td></p>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="exampleInputPassword1"><b>Email</b></label>
+                <p><td><%=ds_sinhvien.email %></td></p>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="exampleInputPassword1"
+                  ><b>Số điện thoại</b></label
+                >
+                <p><td><%=ds_sinhvien.sodienthoai %></td></p>
+              </div>
+              </div>
+            <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="exampleInputPassword1"><b>Điểm tích lũy</b></label>
+              <p><td><%=ds_sinhvien.diemtichluy %></td></p>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="exampleInputPassword1"
+                ><b>Các kỹ năng và kiến thức</b></label
+              >
+              <p><td><%=ds_sinhvien.kynang %></td></p>
+            </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="exampleInputPassword1"><b>Lớp</b></label>
+                <p><td><%=ds_sinhvien.tenlop %></td></p>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="exampleInputPassword1"
+                  ><b>Khóa đào tạo</b></label
+                >
+                <p><td><%=ds_sinhvien.khoadaotao %></td></p>
+              </div>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1"><b>Đề tài đăng kí</b></label>
+                <p><td><%=ds_sinhvien.tendetai %></td></p>
+              </div>
+            </br>
+            <ul style="list-style: none;display: flex;">
+                <li > 
+                   
+                        <div class="form-group">
+                          <input type="hidden" name="IDsinhvien" id="IDsinhviens" value="<%=ds_sinhvien.IDsinhvien %>">
+                          </div>
+                    <div class="form-group">
+                      <button type="submit" id="dongy" class="btn btn-primary">Đồng ý</button>
+                    </div>
+                
+                </li>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <li>
+                   
+                        <div class="form-group">
+                            <input type="hidden" name="IDsinhvien"  id="IDsinhvienes" value="<%=ds_sinhvien.IDsinhvien %>">
+                            </div>
+                    <div class="form-group">
+                      <button type="submit" id="tuchoi" class="btn btn-primary">Từ chối</button>
+                    </div>
+                 
+                </li>
+            </ul>
+           </div>
+          
+           
+           
+           
+       </div>
+   </div>
+ </div> 
+ <% }); %>
+ <% }); %>
+ 
 
-  <% }); %><%- include("./layout/layout.footer.ejs") %>
+ <%- include("./layout/layout.footer.ejs") %>
     <%-include("./layout/layout.js.ejs") %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+
+
+	<script type="text/javascript">
+		function notify(name) {
+			$.notify(name, "success");
+		}
+	</script>
+    <script>
+      $(document).ready(function () {
+        $("#dongy").click(async function () { var data = await {
+      IDsinhvien: document.getElementById("IDsinhviens").value,
+      
+     
+    };
+    var f = await fetch("http://localhost:8008/giangvien/dongy", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then(response => response.json())
+  .then(data => notify(data.message));
+   });
+        
+    
+});
+    </script>
+    <script>
+      $(document).ready(function () {
+        $("#tuchoi").click(async function () { var data = await {
+      IDsinhvien: document.getElementById("IDsinhvienes").value,
+      
+     
+    };
+    var f = await fetch("http://localhost:8008/gianhvien/tuchoi", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then(response => response.json())
+  .then(data => notify(data.message));
+   });
+   
+    
+});
+    </script>
   </body>
 </html>

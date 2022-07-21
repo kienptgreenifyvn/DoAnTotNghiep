@@ -10,6 +10,7 @@
         padding-left: 50px;
       }
     </style>
+    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/styles/metro/notify-metro.css" />
   </head>
 
   <body>
@@ -238,6 +239,15 @@
 
     <% }); %> <%- include("./layout/layout.footer.ejs") %>
     <%-include("./layout/layout.js.ejs") %>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+
+
+	<script type="text/javascript">
+		function notify(name) {
+			$.notify(name, "success");
+		}
+	</script>
     <script>
       $(document).ready(function () {
         $("#dangky").click(async function () { var data = await {
@@ -252,7 +262,7 @@
       },
       body: JSON.stringify(data),
     }).then(response => response.json())
-  .then(data => alert(data.message));;
+  .then(data => notify(data.message));
    });
         
     

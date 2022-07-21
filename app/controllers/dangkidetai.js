@@ -12,7 +12,7 @@ exports.topic_gv = (req, res) => {
       return console.error("error", err);
     }
     client.query(
-      `SELECT detais.*,giangviens."tengiangvien",giangviens."IDgiangvien", donvis."tendonvi", donvis."IDdonvi" FROM detais inner join chudes on detais."IDchude" = chudes."IDchude" inner join sinhviens on detais."IDdetai" = sinhviens."IDsinhvien" inner join giangviens on giangviens."IDgiangvien" = detais."IDgiangvien" inner join donvis on donvis."IDdonvi" = giangviens."IDdonvi" where detais."isActive" =false `,
+      `SELECT detais.*,giangviens."tengiangvien",giangviens."IDgiangvien", donvis."tendonvi", donvis."IDdonvi" FROM detais inner join chudes on detais."IDchude" = chudes."IDchude" inner join giangviens on giangviens."IDgiangvien" = detais."IDgiangvien" inner join donvis on donvis."IDdonvi" = giangviens."IDdonvi" where detais."isActive" =false `,
       function (err, result) {
         done();
         if (err) {
@@ -70,7 +70,7 @@ exports.loc_topic_gv = (req, res) => {
       return console.error("error", err);
     }
     client.query(
-      `SELECT detais.*,giangviens."tengiangvien",giangviens."IDgiangvien", donvis."tendonvi", donvis."IDdonvi" FROM giangviens  inner join detais on giangviens."IDgiangvien" = detais."IDgiangvien" inner join donvis on donvis."IDdonvi" = giangviens."IDdonvi"  where  detais."isActive" = false and 1 = 1 ${
+      `SELECT detais.*,giangviens."tengiangvien",giangviens."IDgiangvien", donvis."tendonvi", donvis."IDdonvi" FROM detais inner join chudes on detais."IDchude" = chudes."IDchude" inner join giangviens on giangviens."IDgiangvien" = detais."IDgiangvien" inner join donvis on donvis."IDdonvi" = giangviens."IDdonvi" where detais."isActive" =false and 1 = 1 ${
         req.body.IDchude != ""
           ? ` and detais."IDchude" = ${req.body.IDchude}`
           : ""
